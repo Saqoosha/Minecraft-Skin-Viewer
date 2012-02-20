@@ -58,7 +58,7 @@
 			
 			_view = new View3D();
 			_view.antiAlias = 4;
-			_view.backgroundColor = 0x62809c;
+			_view.backgroundColor = 0xbbcbff;
 			_view.scene = _scene;
 			_view.camera = _camera;
 			addChild(_view);

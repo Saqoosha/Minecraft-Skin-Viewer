@@ -15,6 +15,7 @@
 	import away3d.textures.BitmapTexture;
 
 	import com.bit101.components.CheckBox;
+	import com.bit101.components.Label;
 	import com.durej.PSDParser.PSDParser;
 
 	import flash.desktop.ClipboardFormats;
@@ -47,6 +48,7 @@
 		private var _center:ObjectContainer3D;
 		private var _avatar : Mesh;
 		private var _watcher:Watcher;
+		private var _alwaysOnTop:CheckBox;
 
 		private var _move:Boolean = false;
 		private var _lastPanAngle:Number;
@@ -66,7 +68,7 @@
 			
 			_view = new View3D();
 			_view.antiAlias = 4;
-			_view.backgroundColor = 0x62809c;
+			_view.backgroundColor = 0xbbcbff;
 			_view.scene = _scene;
 			_view.camera = _camera;
 			addChild(_view);
@@ -77,6 +79,10 @@
 			_center = new ObjectContainer3D();
 			_center.y = 170;
 			_cameraController = new HoverController(_camera, _center, 45, 10, 400);
+			
+			
+			new Label(this, 3, 0, 'DROP SKIN FILE TO WINDOW TO PREVIEW. AUTOMATICALLY RELOADED WHEN IT UPDATES.');
+			_alwaysOnTop = new CheckBox(this, 0, 0, 'ALWAYS ON TOP', _onCheckAlwaysOnTop);
 			
 			addEventListener(Event.ENTER_FRAME, _onEnterFrame);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -89,8 +95,6 @@
 			loader.addEventListener(AssetEvent.ASSET_COMPLETE, _onAssetComplete);
 			loader.loadData(new AvatarData(), new AssetLoaderContext(false));
 			_scene.addChild(loader);
-			
-			new CheckBox(this, 10, 10, 'ALWAYS ON TOP', _onCheckAlwaysOnTop);
 		}
 
 
@@ -206,6 +210,8 @@
 		private function _onResize(event:Event = null):void {
 			_view.width = stage.stageWidth;
 			_view.height = stage.stageHeight;
+			_alwaysOnTop.x = 3;
+			_alwaysOnTop.y = stage.stageHeight - _alwaysOnTop.height - 6;
 		}
 	}
 }
